@@ -1,5 +1,5 @@
 export const GLOBALS = {
-  //backend_url: "https://octopus-app-dgmcr.ondigitalocean.app",
+  //backend_url: "http://localhost:2002",
   backend_url: "https://walrus-app-8bv3s.ondigitalocean.app",
 };
 
