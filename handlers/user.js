@@ -132,7 +132,7 @@ export const assignRole = (value) => {
   if (value === "ADMIN" || value === "SUPERADMIN") {
     return GLOBALS.admin;
   }
-  if (value === "GUIDE" || value === "REFERER") {
+  if (value === "TOURGUIDE" || value === "REFERER") {
     return GLOBALS.guide;
   }
 };

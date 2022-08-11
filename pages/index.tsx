@@ -13,7 +13,7 @@ const HomePage: NextPage = () => {
 
 
   return (
-    <ShopLayout title={'Walter by prosolid3D'} pageDescription={'Prosolid3d Soporte Técnico'}>
+    <ShopLayout title={'Cluuf by Qreatech'} pageDescription={'Cluuf by Qreatech'}>
 
         <Typography variant='h1' component='h1'></Typography>
      

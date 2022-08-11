@@ -5,6 +5,7 @@ import { MonetizationOn,  CategoryOutlined, ConfirmationNumberOutlined, Escalato
 
 import { UiContext, AuthContext } from '../../context';
 import { useRouter } from 'next/router';
+import Cookies from "js-cookie";
 
 import { validateToken } from "../../handlers/user"
 
@@ -16,7 +17,7 @@ export const SideMenu = () => {
 
     const validateRoot = async () => {
         const { data, ok } = await validateToken();
-    
+         console.log(data);
         if (ok) {
             setUser(data.user);
         }
@@ -37,7 +38,10 @@ export const SideMenu = () => {
 
 
     useEffect(()=>{
-        validateRoot()    
+       if(Cookies.get("token")){
+        validateRoot()  
+        }
+        
     },[])
   
     
@@ -49,7 +53,7 @@ export const SideMenu = () => {
         sx={{ backdropFilter: 'blur(4px)', transition: 'all 0.5s ease-out' }}
         onClose={ toggleSideMenu }
     >
-        <Box sx={{ width: 250, paddingTop: 5 }}>
+  <Box sx={{ width: 250, paddingTop: 5 }}>
             
             <List>
 
@@ -66,6 +70,16 @@ export const SideMenu = () => {
                                     <ListItemText primary={'Cerrar sesión'} />
                             </ListItem>
                     
+                         
+                            <ListItem 
+                                button 
+                                onClick={() => navigateTo('/plan/list') }
+                            >
+                                <ListItemIcon>
+                                    <MonetizationOn/>
+                                </ListItemIcon>
+                                <ListItemText primary={'Planes'} />
+                            </ListItem>    
                      
                           
                         </>
@@ -91,12 +105,14 @@ export const SideMenu = () => {
 
             
             {
-                    (user?.role === 'ADMIN' || user?.role === "SUPERADMIN")  && (
+                    Cookies.get("role") === "dm"  && (
                         <>
                             <Divider />
                             <ListSubheader>Admin Panel</ListSubheader>
                           
-                            <ListItem 
+                         
+
+  <ListItem 
                                 button 
                                 onClick={() => navigateTo('/root/list') }
                             >
@@ -104,24 +120,15 @@ export const SideMenu = () => {
                                     <ConfirmationNumberOutlined/>
                                 </ListItemIcon>
                                 <ListItemText primary={'Usuarios'} />
-                            </ListItem>    
-                            <ListItem 
-                                button 
-                                onClick={() => navigateTo('/plan/list') }
-                            >
-                                <ListItemIcon>
-                                    <MonetizationOn/>
-                                </ListItemIcon>
-                                <ListItemText primary={'Planes'} />
-                            </ListItem>    
-
+                            </ListItem>
                         
                         </>
                     )
                 }
                  
             </List>
-        </Box>
+        </Box> 
+
     </Drawer>
   )
 }
