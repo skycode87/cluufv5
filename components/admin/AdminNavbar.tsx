@@ -7,10 +7,7 @@ import { AppBar, Box, Button, Link, Toolbar, Tooltip, Avatar } from '@mui/materi
 import { AuthContext } from '../../context/auth'
 import { UiContext } from '../../context';
 
-import logo from "../../assets/prosolid.png"
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import ViewListIcon from '@mui/icons-material/ViewList';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+
 
 export const AdminNavbar = () => {
     
@@ -19,6 +16,8 @@ export const AdminNavbar = () => {
     const { user } = useContext(AuthContext);
     const [isSearchVisible, setIsSearchVisible] = useState(false);
 
+    
+    
     return (
         <AppBar>
             <Toolbar>

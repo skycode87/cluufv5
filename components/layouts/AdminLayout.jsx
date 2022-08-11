@@ -7,7 +7,7 @@ import { AuthContext } from "../../context/auth";
 import { validateToken } from "../../handlers/user";
 
 export const AdminLayout = ({ children, title, subTitle, icon }) => {
-  const { user, isLoggedIn, isAdmin, isRoot, isUser } = useContext(AuthContext);
+  //const { user, isLoggedIn, isAdmin, isRoot, isUser } = useContext(AuthContext);
   const [datax, setDatax] = useState([]);
 
   const validateRoot = async () => {

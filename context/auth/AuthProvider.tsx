@@ -65,15 +65,10 @@ export const AuthProvider:FC = ({ children }) => {
     }
 
     const assignRole = (user) => {
-        console.log(user)
         switch (user.role) {
             case 'admin':
                 dispatch({ type: '[Auth] - LoginAdmin', payload: user, isAdmin: true });
                 break;
-           
-            case 'SUPERADMIN':
-                dispatch({ type: '[Auth] - LoginAdmin', payload: user, isAdmin: true });
-                 break;
 
             case 'root':
                 dispatch({ type: '[Auth] - LoginRoot', payload: user, isRoot: true  });
@@ -85,11 +80,11 @@ export const AuthProvider:FC = ({ children }) => {
         }
     }
 
-    const loginUser = async( email: string, password: string ): Promise<boolean> => {
+    const loginUser = async( email, password, instance ) => {
         try {
-            const { data } = await axios.post(API_ROUTER.signin, { email, password });
+            const { data } = await axios.post(API_ROUTER.signin, { email, password, instance });
             const { token, user } = data;
-            Cookies.set('token', token );            
+            Cookies.set('token', token );                 
             assignRole(user);
             return true;
         } catch (error) {
@@ -154,7 +149,6 @@ export const AuthProvider:FC = ({ children }) => {
     return (
         <AuthContext.Provider value={{
             ...state,
-
             // Methods
             loginUser,
             loginSlackAdmin,

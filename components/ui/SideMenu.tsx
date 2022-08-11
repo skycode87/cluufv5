@@ -1,23 +1,31 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 
-import { Box, Divider, Drawer, IconButton, Input, InputAdornment, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from "@mui/material"
-import { MonetizationOn, AddBox, AdminPanelSettings, FormatListNumbered, CategoryOutlined, ConfirmationNumberOutlined, EscalatorWarningOutlined, FemaleOutlined, LoginOutlined, MaleOutlined, SearchOutlined, VpnKeyOutlined, DashboardOutlined } from '@mui/icons-material';
+import { Box, Divider, Drawer,  List, ListItem, ListItemIcon, ListItemText, ListSubheader } from "@mui/material"
+import { MonetizationOn,  CategoryOutlined, ConfirmationNumberOutlined, EscalatorWarningOutlined, FemaleOutlined, LoginOutlined, MaleOutlined, SearchOutlined, VpnKeyOutlined, DashboardOutlined } from '@mui/icons-material';
 
 import { UiContext, AuthContext } from '../../context';
 import { useRouter } from 'next/router';
 
+import { validateToken } from "../../handlers/user"
 
 export const SideMenu = () => {
 
     const router = useRouter();
     const { isMenuOpen, toggleSideMenu } = useContext( UiContext );
-    const { user, isLoggedIn, logout } = useContext(  AuthContext );
+    const [user, setUser] = useState(null)
 
-    const [searchTerm, setSearchTerm] = useState('');
+    const validateRoot = async () => {
+        const { data, ok } = await validateToken();
+    
+        if (ok) {
+            setUser(data.user);
+        }
+      };
 
-    const onSearchTerm = () => {
-        if( searchTerm.trim().length === 0 ) return;
-        navigateTo(`/search/${ searchTerm }`);
+
+    const logout = () => {
+        toggleSideMenu();
+        router.push(`/auth/capture`);
     }
 
     
@@ -26,6 +34,13 @@ export const SideMenu = () => {
         router.push(url);
     }
 
+
+
+    useEffect(()=>{
+        validateRoot()    
+    },[])
+  
+    
 
   return (
     <Drawer
@@ -41,7 +56,7 @@ export const SideMenu = () => {
                
 
                 {
-                    isLoggedIn && (
+                    user?._id && (
 
                     <>
                             <ListItem button onClick={ logout }>
@@ -59,11 +74,11 @@ export const SideMenu = () => {
 
 
                 {
-                    !isLoggedIn 
+                    !user?._id 
                     && (
                         <ListItem 
                             button
-                            onClick={ () => navigateTo(`/auth/login`) }
+                            onClick={ () => navigateTo(`/auth/capture`) }
                         >
                             <ListItemIcon>
                                 <VpnKeyOutlined/>
@@ -76,34 +91,28 @@ export const SideMenu = () => {
 
             
             {
-                    user?.role === 'root' && (
+                    (user?.role === 'ADMIN' || user?.role === "SUPERADMIN")  && (
                         <>
                             <Divider />
                             <ListSubheader>Admin Panel</ListSubheader>
-                            <ListItem button
-                                      onClick={ () => navigateTo('/task/list') }>
-                                <ListItemIcon>
-                                    <CategoryOutlined/>
-                                </ListItemIcon>
-                                <ListItemText primary={'Todos los Tickets'} />
-                            </ListItem>   
+                          
                             <ListItem 
                                 button 
-                                onClick={() => navigateTo('/configurator/inicio') }
+                                onClick={() => navigateTo('/root/list') }
                             >
                                 <ListItemIcon>
                                     <ConfirmationNumberOutlined/>
                                 </ListItemIcon>
-                                <ListItemText primary={'Configurador'} />
+                                <ListItemText primary={'Usuarios'} />
                             </ListItem>    
                             <ListItem 
                                 button 
-                                onClick={() => navigateTo('/configurator/play') }
+                                onClick={() => navigateTo('/plan/list') }
                             >
                                 <ListItemIcon>
                                     <MonetizationOn/>
                                 </ListItemIcon>
-                                <ListItemText primary={'Presupuestador'} />
+                                <ListItemText primary={'Planes'} />
                             </ListItem>    
 
                         

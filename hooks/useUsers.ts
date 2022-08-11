@@ -39,6 +39,7 @@ export const useRoot = () => {
     let isAdmin = false;
     let isGuide = false;
 
+
     if(data?.user?.role === "SUPERADMIN" || data?.user?.role === "ADMIN"){
       isAdmin = true;
     }

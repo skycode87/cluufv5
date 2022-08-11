@@ -17,10 +17,7 @@ function MyApp({ Component, pageProps }: any) {
 
   useEffect(()=>{
 
-    console.log("_app")
-
-    console.log("Cookies", Cookies.get('token'))
-
+  
   },[])
 
   return (

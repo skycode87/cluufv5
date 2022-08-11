@@ -39,7 +39,7 @@ const PlanList = () => {
   const [isLoadingSearch, setLoadingSearch] = useState(false);
   const [isSearch, setSearch] = useState(false);
 
-  const { isGuide, isAdmin } = useRoot();
+  //const { isGuide, isAdmin } = useRoot();
 
   const handlePlansByGuia = async () => {
     try {
@@ -159,9 +159,9 @@ const PlanList = () => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    console.log("guia", isGuide, "admin", isAdmin);
-    isGuide && handlePlansByGuia();
-    isAdmin && initialData();
+    // console.log("guia", isGuide, "admin", isAdmin);
+    //isGuide && handlePlansByGuia();
+    initialData();
   }, []);
 
   const rangeDatesHandle = async (value) => {

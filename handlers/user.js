@@ -1,7 +1,8 @@
 import axios from "axios";
 import axiosApi from "../axios/axiosApi";
+import Cookies from "js-cookie";
 
-import { API_ROUTER } from "../config";
+import { API_ROUTER, GLOBALS } from "../config";
 
 export const signin = async ({ email, password }) => {
   try {
@@ -105,4 +106,33 @@ export const validateToken = async () => {
     data,
     status,
   };
+};
+
+export const loginUser = async (email, password, instance) => {
+  try {
+    const { data } = await axios.post(API_ROUTER.signin, {
+      email,
+      password,
+      instance,
+    });
+    const { token, user } = data;
+
+    console.log(user.role);
+    console.log({ token, user });
+
+    Cookies.set("token", token);
+    Cookies.set("role", assignRole(user.role));
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const assignRole = (value) => {
+  if (value === "ADMIN" || value === "SUPERADMIN") {
+    return GLOBALS.admin;
+  }
+  if (value === "GUIDE" || value === "REFERER") {
+    return GLOBALS.guide;
+  }
 };
