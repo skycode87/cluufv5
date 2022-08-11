@@ -29,7 +29,7 @@ const LoginPage = () => {
 
     const onSubmit: SubmitHandler<Inputs> = async ( data ) => {
         const { email, password } = data;   
-        const isValidLogin = await loginUser( email, password );
+        const isValidLogin = await loginUser( email, password, null );
       
         if ( !isValidLogin ) {
                  setShowError(true);
