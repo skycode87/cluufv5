@@ -55,6 +55,11 @@ const PlanForm = ({ onSubmit, isSaving = false, pack, guides = {} }) => {
   });
   const [timeVal, setTimeVal] = useState(new Date());
 
+  const handleChange = ({ target }) => {
+    const { value, name } = target;
+    if (name === "insitu") setValue("insitu", value);
+  };
+
   const handleChangeTime = (newValue) => {
     setTimeVal(newValue);
     setValue("departureTime", moment(newValue).format("HH:mm"));
@@ -147,7 +152,7 @@ const PlanForm = ({ onSubmit, isSaving = false, pack, guides = {} }) => {
                           <>
                             <MobileDatePicker
                               value={getValues("departureDate")}
-                              inputFormat="MM/dd/yyyy"
+                              inputFormat="yyyy-MM-dd"
                               renderInput={(params) => (
                                 <TextField {...params} />
                               )}
@@ -155,13 +160,13 @@ const PlanForm = ({ onSubmit, isSaving = false, pack, guides = {} }) => {
                                 handleChange;
                                 setValue(
                                   "departureDate",
-                                  moment(valos).format("MM/DD/YYYY")
+                                  moment(valos).format("YYYY-MM-DD")
                                 );
                               }}
                               onAccept={(valos) => {
                                 setValue(
                                   "departureDate",
-                                  moment(valos).format("MM/DD/YYYY")
+                                  moment(valos).format("YYYY-MM-DD")
                                 );
                               }}
                             />

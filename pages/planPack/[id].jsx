@@ -49,7 +49,7 @@ const PackPlanPage = () => {
 
       if (status === 200) {
         data.serial
-          ? ToastSuccessServer(`Plan #${data.code}`)
+          ? ToastSuccessServer(`Plan #${data.serial}`)
           : ToastSuccessServer(`Sin asignación de codigo`);
       }
 
