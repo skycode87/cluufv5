@@ -80,6 +80,18 @@ export const SideMenu = () => {
                                 </ListItemIcon>
                                 <ListItemText primary={'Planes'} />
                             </ListItem>    
+
+
+                            <ListItem 
+                                button 
+                                onClick={() => navigateTo('/pack/list') }
+                            >
+                                <ListItemIcon>
+                                    <MonetizationOn/>
+                                </ListItemIcon>
+                                <ListItemText primary={'Paquetes/Servicios'} />
+                            </ListItem>    
+                     
                      
                           
                         </>

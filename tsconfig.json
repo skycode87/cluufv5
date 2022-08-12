@@ -24,7 +24,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "components/forms/taskSearchByDate.js", "pages/configurator/inicio.jsx", "pages/client/list.jsx", "components/ui/GanttService.jsx", "pages/plan/[planId] copy.jsx", "components/layouts/AdminLayout.jsx"  ],
+, "components/forms/taskSearchByDate.js", "pages/configurator/inicio.jsx", "pages/client/list.jsx", "components/ui/GanttService.jsx", "pages/plan/[packId].jsx", "components/layouts/AdminLayout.jsx"  ],
   "exclude": [
     "node_modules"
   ]
