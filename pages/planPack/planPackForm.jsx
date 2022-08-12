@@ -142,6 +142,7 @@ const PlanForm = ({ onSubmit, isSaving = false, pack, guides = {} }) => {
                         render={({
                           field: { onChange, name, value },
                           fieldState: { invalid, isDirty }, //optional
+                          formState: { errors }, //optional, but necessary if you want to show an error message
                         }) => (
                           <>
                             <MobileDatePicker
@@ -164,6 +165,12 @@ const PlanForm = ({ onSubmit, isSaving = false, pack, guides = {} }) => {
                                 );
                               }}
                             />
+                            {errors &&
+                              errors[name] &&
+                              errors[name].type === "required" && (
+                                //if you want to show an error message
+                                <span>your error message !</span>
+                              )}
                           </>
                         )}
                       />
