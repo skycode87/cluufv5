@@ -46,20 +46,14 @@ const PlanForm = ({ onSubmit, isSaving = false, pack, guides = {} }) => {
     watch,
   } = useForm({
     defaultValues: {
-      name: pack.name,
-      kind: pack.kind,
-      price: pack.price,
-      packId: pack._id,
-      maxLimit: pack.maxLimit,
+      name: pack?.name,
+      kind: pack?.kind,
+      price: pack?.price,
+      packId: pack?._id,
+      maxLimit: pack?.maxLimit,
     },
   });
   const [timeVal, setTimeVal] = useState(new Date());
-
-  const handleChange = ({ target }) => {
-    const { value, name } = target;
-    console.log({ value, name });
-    if (name === "insitu") setValue("insitu", value);
-  };
 
   const handleChangeTime = (newValue) => {
     setTimeVal(newValue);
@@ -148,7 +142,6 @@ const PlanForm = ({ onSubmit, isSaving = false, pack, guides = {} }) => {
                         render={({
                           field: { onChange, name, value },
                           fieldState: { invalid, isDirty }, //optional
-                          formState: { errors }, //optional, but necessary if you want to show an error message
                         }) => (
                           <>
                             <MobileDatePicker
@@ -171,12 +164,6 @@ const PlanForm = ({ onSubmit, isSaving = false, pack, guides = {} }) => {
                                 );
                               }}
                             />
-                            {errors &&
-                              errors[name] &&
-                              errors[name].type === "required" && (
-                                //if you want to show an error message
-                                <span>your error message !</span>
-                              )}
                           </>
                         )}
                       />
