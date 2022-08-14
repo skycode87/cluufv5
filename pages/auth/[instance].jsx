@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from "react";
-
 import NextLink from "next/link";
 import Cookies from "js-cookie";
 
@@ -28,22 +27,25 @@ const LoginPage = () => {
   const router = useRouter();
   const { instance } = router.query;
   const [isLoading, setLoading] = useState(false);
+  const [company, setCompany] = useState(null);
 
   // const { loginUser, user, isLoggedIn } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
+    setValue,
     watch,
     formState: { errors },
   } = useForm();
   const [showError, setShowError] = useState(false);
 
   const onSubmit = async (data) => {
-    const { email, password } = data;
-    const isValidLogin = await loginUser(email, password, instance);
     setLoading(true);
+    const { email, password } = data;
+    const isValidLogin = await loginUser(email, password, company);
+    Cookies.set("instance",company);
+
     if (!isValidLogin) {
-      console.log("no fui valido");
       setShowError(true);
       setTimeout(() => setShowError(false), 3000);
       setLoading(false);
@@ -55,9 +57,9 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-    Cookies.remove("token");
-    Cookies.remove("role");
-  }, []);
+    setCompany(instance);
+    setValue("company", instance);
+  }, [instance]);
 
   return (
     <AuthLayout title={"Ingresar"}>
@@ -99,8 +101,23 @@ const LoginPage = () => {
 
             <Grid item xs={12}>
               <TextField
+                type="text"
+                label="company"
+                variant="filled"
+                fullWidth
+                {...register("company", {
+                  required: "Este campo es requerido",
+                })}
+                error={!!errors.company}
+                helperText={errors.company?.message}
+                sx={{ background: "#fff" }}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
                 type="ematextil"
-                label="Correo"
+                label="Login"
                 variant="filled"
                 fullWidth
                 {...register("email", {

@@ -41,7 +41,6 @@ export const Navbar = () => {
 
                 <Box className="fadeIn">
                     <Avatar src={user?.avatar} sx={{ display: "inline-flex", width: 22, height: 22, borderRadius: 2, marginRight: 2 }}  />
-                    <img  style={{ display: "inline-flex"}} alt="Logo" src="/Logo.png" width="80px" /> 
                 </Box>
 
 

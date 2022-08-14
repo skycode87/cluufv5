@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { useRoot } from "../../hooks";
 
 import { PeopleOutline } from "@mui/icons-material";
 import moment from "moment";
@@ -29,7 +28,6 @@ import { AuthContext } from "../../context/auth";
 const PackList = () => {
   const [datas, setDatas] = useState([]);
   const router = useRouter();
-  const { isLoggedIn } = useContext(AuthContext);
   const [isLoading, setLoading] = useState(false);
   const [isLoadingSearch, setLoadingSearch] = useState(false);
   const [isSearch, setSearch] = useState(false);

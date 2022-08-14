@@ -108,6 +108,24 @@ export const validateToken = async () => {
   };
 };
 
+export const getSession = () => JSON.parse(localStorage.getItem("session"));
+
+export const setSession = (params) =>
+  localStorage.setItem("session", JSON.stringify(params));
+
+export const isToken = async () => {
+  const response = await axiosApi.post(API_ROUTER.USER.userValidateToken, {
+    token: localStorage.getItem("token"),
+  });
+  const { data, status } = response;
+
+  return {
+    ok: status === 200 ? true : false,
+    data,
+    status,
+  };
+};
+
 export const loginUser = async (email, password, instance) => {
   try {
     const { data } = await axios.post(API_ROUTER.signin, {
@@ -116,10 +134,7 @@ export const loginUser = async (email, password, instance) => {
       instance,
     });
     const { token, user } = data;
-
-    console.log(user.role);
-    console.log({ token, user });
-
+    localStorage.setItem("token", token);
     Cookies.set("token", token);
     Cookies.set("role", assignRole(user.role));
     return true;

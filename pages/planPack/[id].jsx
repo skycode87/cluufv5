@@ -19,7 +19,6 @@ import {
   ToastErrorServer,
 } from "../../components/ui/toast";
 
-import { green } from "@mui/material/colors";
 import { AuthContext } from "../../context/auth";
 
 const PackPlanPage = () => {
@@ -36,8 +35,6 @@ const PackPlanPage = () => {
 
   const onSubmit = async (form) => {
     try {
-      console.log(form);
-
       setIsSaving(true);
 
       let method = "POST";
@@ -62,8 +59,6 @@ const PackPlanPage = () => {
   };
 
   const initialData = async () => {
-    //setLoading(true);
-    console.log("hey", id);
     try {
       const { pack, ok } = await packById(id);
       if (ok) {
@@ -71,7 +66,6 @@ const PackPlanPage = () => {
       }
     } catch (err) {
     } finally {
-      /// setLoading(false);
     }
   };
 

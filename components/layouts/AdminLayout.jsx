@@ -3,33 +3,35 @@ import { Box, CircularProgress } from "@mui/material";
 import { AdminNavbar } from "../admin";
 
 import { SideMenu } from "../ui";
-import { AuthContext } from "../../context/auth";
-import { validateToken } from "../../handlers/user";
+import { isToken, setSession } from "../../handlers/user";
 
 export const AdminLayout = ({ children, title, subTitle, icon }) => {
   //const { user, isLoggedIn, isAdmin, isRoot, isUser } = useContext(AuthContext);
   const [datax, setDatax] = useState([]);
 
-  const validateRoot = async () => {
-    const { data, ok } = await validateToken();
-
+  const validateSession = async () => {
+    const { data, ok } = await isToken();
     if (ok) {
       setDatax(data.user);
+      setSession(data.user);
     }
   };
-
   useEffect(() => {
-    validateRoot();
+    (async () => {
+      try {
+        await validateSession();
+      } catch (err) {
+        console.log(err);
+      }
+    })();
   }, []);
 
-  return datax ? (
+  return datax && datax?._id ? (
     <>
       <nav>
         <AdminNavbar />
       </nav>
-
       <SideMenu />
-
       <main
         style={{
           margin: "80px auto",

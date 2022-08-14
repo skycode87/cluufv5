@@ -159,6 +159,7 @@ const PlanList = () => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
+    console.log("planlist");
     // console.log("guia", isGuide, "admin", isAdmin);
     //isGuide && handlePlansByGuia();
     initialData();

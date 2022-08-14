@@ -7,6 +7,7 @@ interface Props {
     title: string;
 }
 
+console.log("pedro");
 
 export const AuthLayout: FC<Props> = ({ children, title  }) => {
   return (

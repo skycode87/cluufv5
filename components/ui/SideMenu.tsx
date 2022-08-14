@@ -6,22 +6,13 @@ import { MonetizationOn,  CategoryOutlined, ConfirmationNumberOutlined, Escalato
 import { UiContext, AuthContext } from '../../context';
 import { useRouter } from 'next/router';
 import Cookies from "js-cookie";
-
-import { validateToken } from "../../handlers/user"
+import {  getSession } from "../../handlers/user";
 
 export const SideMenu = () => {
 
     const router = useRouter();
     const { isMenuOpen, toggleSideMenu } = useContext( UiContext );
     const [user, setUser] = useState(null)
-
-    const validateRoot = async () => {
-        const { data, ok } = await validateToken();
-         console.log(data);
-        if (ok) {
-            setUser(data.user);
-        }
-      };
 
 
     const logout = () => {
@@ -35,17 +26,10 @@ export const SideMenu = () => {
         router.push(url);
     }
 
-
-
     useEffect(()=>{
-       if(Cookies.get("token")){
-        validateRoot()  
-        }
-        
+        setUser(getSession())
     },[])
   
-    
-
   return (
     <Drawer
         open={ isMenuOpen }
@@ -104,7 +88,7 @@ export const SideMenu = () => {
                     && (
                         <ListItem 
                             button
-                            onClick={ () => navigateTo(`/auth/capture`) }
+                            onClick={ () => navigateTo(`/auth/${Cookies.get("instance")}`) }
                         >
                             <ListItemIcon>
                                 <VpnKeyOutlined/>
@@ -117,7 +101,7 @@ export const SideMenu = () => {
 
             
             {
-                    Cookies.get("role") === "dm"  && (
+                   (user?.role === "ADMIN" ||  user?.role === "SUPERADMIN")  && (
                         <>
                             <Divider />
                             <ListSubheader>Admin Panel</ListSubheader>
