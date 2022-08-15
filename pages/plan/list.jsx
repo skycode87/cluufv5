@@ -102,14 +102,6 @@ const PlanList = () => {
 
   const columns = [
     {
-      field: "totalApps",
-      headerName: "Apps",
-      width: 80,
-      renderCell: ({ row }) => {
-        return <Typography>{row.totalApps} </Typography>;
-      },
-    },
-    {
       field: "estatus",
       headerName: "Estado",
       width: 80,
@@ -125,7 +117,9 @@ const PlanList = () => {
         return (
           <NextLink href={`/appsByPlan/${row.id}`} passHref>
             <Link underline="always">
-              <Typography>{row.packName} </Typography>
+              <Typography>
+                <b>{row.packName}</b>
+              </Typography>
             </Link>
           </NextLink>
         );
@@ -134,9 +128,13 @@ const PlanList = () => {
     {
       field: "departureDate",
       headerName: "Fecha",
-      width: 120,
+      width: 220,
       renderCell: ({ row }) => {
-        return <Typography>{row.departureDate} </Typography>;
+        return (
+          <Typography>
+            {moment(row.departureDate, "YYYY-MM-DD").format("LL")}
+          </Typography>
+        );
       },
     },
     {

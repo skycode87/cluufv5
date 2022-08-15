@@ -103,6 +103,17 @@ export const getPlansByGuia = async (guiaId) => {
   };
 };
 
+export const closePlan = async (planId) => {
+  const response = await axiosApi.put(API_ROUTER.PLAN.closePlan, { planId });
+  const { data, status } = response;
+
+  return {
+    ok: status === 200 ? true : false,
+    data: data || [],
+    status,
+  };
+};
+
 /*
 
 export const userSearchDomain = async (id) => {

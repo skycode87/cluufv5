@@ -7,6 +7,10 @@ import download from "downloadjs";
 import { PeopleOutline, ArrowBackIos, Delete } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 import Swal from "sweetalert2";
+import {
+  ToastSuccessServer,
+  ToastErrorServer,
+} from "../../components/ui/toast";
 
 import {
   Grid,
@@ -21,15 +25,16 @@ import {
 
 import axiosApi from "../../axios/axiosApi";
 import { appByPlan } from "../../handlers/app";
-import { plansById, getImagesPlan, getTourguides } from "../../handlers/plan";
+import {
+  plansById,
+  getImagesPlan,
+  getTourguides,
+  closePlan,
+} from "../../handlers/plan";
 
 import { AdminLayout } from "../../components/layouts/AdminLayout";
 
 import { API_ROUTER } from "../../config";
-import {
-  ToastSuccessServer,
-  ToastErrorServer,
-} from "../../components/ui/toast";
 
 import { useRoot } from "../../hooks";
 
@@ -201,6 +206,28 @@ const PlanList = () => {
       ToastErrorServer(err);
     } finally {
     }
+  };
+
+  const handleClose = async () => {
+    Swal.fire({
+      title: "Deseas confirmar el cierre del plan?",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Si, deseo cerrarlo",
+      denyButtonText: `Cancelar`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        handleCloseConfirmed();
+      } else if (result.isDenied) {
+      }
+    });
+  };
+
+  const handleCloseConfirmed = async () => {
+    const { data, ok } = await closePlan(planId);
+    if (data.status === "close") ToastSuccessServer(`El plan ha sido cerrado`);
+    else ToastSuccessServer(`Error cerrando el tour`);
   };
 
   const onDelete = (e, row) => {
@@ -389,6 +416,14 @@ const PlanList = () => {
                 </Link>
               </NextLink>
             </Grid>
+
+            <Grid itemxs={12} md={1} sx={{ pt: 1 }}>
+              <b>Estatus</b>
+              <Typography variant="overline" display="block" gutterBottom>
+                {statusFormat(plan?.status)}
+              </Typography>
+            </Grid>
+
             {datas && (
               <Grid item xs={6} md={1}>
                 <b>Apps</b>
@@ -437,13 +472,6 @@ const PlanList = () => {
               <b>Fecha y horario</b>
               <Typography variant="overline" display="block" gutterBottom>
                 {plan?.departureDate} / {plan?.departureTime}
-              </Typography>
-            </Grid>
-
-            <Grid itemxs={12} md={1}>
-              <b>Estatus</b>
-              <Typography variant="overline" display="block" gutterBottom>
-                {plan?.status}
               </Typography>
             </Grid>
 
@@ -502,7 +530,12 @@ const PlanList = () => {
             </Grid>
 
             <Grid item xs={6} md={2}>
-              <Button variant="outlined" color="success" fullWidth>
+              <Button
+                variant="outlined"
+                color="success"
+                fullWidth
+                onClick={handleClose}
+              >
                 Cerrar este Evento
               </Button>
             </Grid>
@@ -530,7 +563,7 @@ const PlanList = () => {
                 )}
               </Grid>
             ) : (
-              <h2>No se encontraron Apps registradas</h2>
+              <h2></h2>
             )}
           </Grid>
         ) : (
