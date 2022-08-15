@@ -1,5 +1,5 @@
 export const GLOBALS = {
- // backend_url: "http://localhost:2002",
+  //backend_url: "http://localhost:2002",
   backend_url: "https://walrus-app-8bv3s.ondigitalocean.app",
   admin: "dm",
   guide: "gd",
@@ -41,10 +41,12 @@ export const API_ROUTER = {
   },
   PLAN: {
     getPlanInstance: `${GLOBALS.backend_url}/planInstance`, // :idTicket
+    getPlanPack: `${GLOBALS.backend_url}/planPack`, // :idTicket
     addBucket: `${GLOBALS.backend_url}/bucket`, // :idTicket
     getImages: `${GLOBALS.backend_url}/getImagesPlan`, // :idTicket
     getTourguide: `${GLOBALS.backend_url}/getTourguide`, // :idTicket
     getPlansByDate: `${GLOBALS.backend_url}/getPlansByDate`, // :idTicket
+    planUpdates: `${GLOBALS.backend_url}/planUpdates`, // :idTicket
   },
   PACK: {
     getPackInstance: `${GLOBALS.backend_url}/packInstance`, // :idTicket

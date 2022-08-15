@@ -1,24 +1,13 @@
 import { useState, useEffect, useContext } from "react";
 import NextLink from "next/link";
-import { useRouter } from "next/router";
-import { useRoot } from "../../hooks";
 
 import { PeopleOutline } from "@mui/icons-material";
 import moment from "moment";
 import { DataGrid } from "@mui/x-data-grid";
-import {
-  Grid,
-  Link,
-  CircularProgress,
-  Typography,
-  Box,
-  Button,
-  FormLabel,
-  MenuItem,
-  Select,
-} from "@mui/material";
+import { Grid, Link, CircularProgress, Typography, Box } from "@mui/material";
 
 import {
+  planUpdates,
   planSearchAll,
   getPlansByDate,
   getPlansByGuia,
@@ -29,17 +18,9 @@ import TaskSearchByDate from "../../components/forms/taskSearchByDate";
 
 import { statusFormat } from "../../utils/formats";
 
-import { AuthContext } from "../../context/auth";
-
 const PlanList = () => {
   const [datas, setDatas] = useState([]);
-  const router = useRouter();
-  const { isLoggedIn } = useContext(AuthContext);
   const [isLoading, setLoading] = useState(false);
-  const [isLoadingSearch, setLoadingSearch] = useState(false);
-  const [isSearch, setSearch] = useState(false);
-
-  //const { isGuide, isAdmin } = useRoot();
 
   const handlePlansByGuia = async () => {
     try {
@@ -59,7 +40,9 @@ const PlanList = () => {
             totalApps: plan.totalApps,
             packName: plan.packId.name,
             guideName: plan?.guideId?.firstname,
-            id: plan._id,
+            availability: plan?.availability,
+            openApps: plan?.openApps,
+            id: plan?._id,
           }))
         );
         return plans;
@@ -74,25 +57,31 @@ const PlanList = () => {
     setLoading(true);
 
     try {
-      const { plans, ok } = await planSearchAll();
-      if (ok) {
-        setDatas(
-          plans.map((plan) => ({
-            departureDate: plan.departureDate,
-            departureTime: plan.departureTime,
-            maxLimit: plan.maxLimit,
-            name: plan.name,
-            packId: plan.packId,
-            price: plan.price,
-            serial: plan.serial,
-            status: plan.status,
-            totalApps: plan.totalApps,
-            packName: plan.packId.name,
-            guideName: plan?.guideId?.firstname,
-            id: plan._id,
-          }))
-        );
-        return plans;
+      const { ok1 } = await planUpdates();
+      if (ok1) {
+        const { plans, ok } = await planSearchAll();
+        if (ok) {
+          setDatas(
+            plans.map((plan) => ({
+              departureDate: plan.departureDate,
+              departureTime: plan.departureTime,
+              maxLimit: plan.maxLimit,
+              name: plan.name,
+              packId: plan.packId,
+              price: plan.price,
+              serial: plan.serial,
+              status: plan.status,
+              totalApps: plan.totalApps,
+              packName: plan.packId.name,
+              guideName: plan?.guideId?.firstname,
+              availability: plan?.availability,
+              openApps: plan?.openApps,
+              id: plan?._id,
+            }))
+          );
+
+          return plans;
+        }
       }
     } catch (err) {
     } finally {
@@ -107,6 +96,19 @@ const PlanList = () => {
       width: 80,
       renderCell: ({ row }) => {
         return <Typography>{statusFormat(row.status)} </Typography>;
+      },
+    },
+    {
+      field: "maxLimit",
+      headerName: "Cupos",
+      width: 80,
+      renderCell: ({ row }) => {
+        return (
+          <Typography>
+            <b>{parseFloat(row.maxLimit) - parseFloat(row.availability)}</b>
+            <small>/{row.maxLimit}</small>
+          </Typography>
+        );
       },
     },
     {
@@ -146,6 +148,18 @@ const PlanList = () => {
       },
     },
     {
+      field: "openApps",
+      headerName: "Asistencía",
+      width: 100,
+      renderCell: ({ row }) => {
+        return (
+          <Typography>
+            <b>{row.openApps}</b>
+          </Typography>
+        );
+      },
+    },
+    {
       field: "guideId",
       headerName: "Guía",
       width: 120,
@@ -157,7 +171,17 @@ const PlanList = () => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    console.log("planlist");
+    /*
+    if (localStorage.getItem("reload")) {
+    } else {
+      localStorage.setItem("reload", true);
+      setTimeout(() => {
+        location.reload();
+      }, [1000]);
+    }
+    */
+
+    // console.log("planlist");
     // console.log("guia", isGuide, "admin", isAdmin);
     //isGuide && handlePlansByGuia();
     initialData();
@@ -182,7 +206,9 @@ const PlanList = () => {
             totalApps: plan.totalApps,
             packName: plan.packId.name,
             guideName: plan?.guideId?.firstname,
-            id: plan._id,
+            availability: plan?.availability,
+            openApps: plan?.openApps,
+            id: plan?._id,
           }))
         );
       setLoading(false);
@@ -206,46 +232,6 @@ const PlanList = () => {
                 rangeDatesValues={rangeDatesHandle}
               />
             </Grid>
-
-            {/*
-            <Grid item xs={12} md={2}>
-              <FormLabel>
-                <Typography
-                  sx={{ mb: 1, color: "#294595" }}
-                  variant="button"
-                  display="block"
-                  gutterBottom
-                >
-                  Busqueda por:
-                </Typography>
-              </FormLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="search"
-                label="search"
-                onChange={handleChange}
-                defaultValue="proximos"
-                name="search"
-              >
-                <MenuItem value="proximos">Proximos</MenuItem>
-                <MenuItem value="pasados">Pasados</MenuItem>
-                <MenuItem value="50">últimos 50</MenuItem>
-              </Select>
-            </Grid>
-
-            <Grid item xs={12} md={2}>
-              <FormLabel>
-                <Typography
-                  sx={{ mb: 1, color: "#294595" }}
-                  variant="button"
-                  display="block"
-                  gutterBottom
-                >
-                  Busqueda por Guía:
-                </Typography>
-              </FormLabel>
-            </Grid>
-            */}
 
             {datas.length > 0 ? (
               <Grid item xs={12} sx={{ height: 1000, width: "100%" }}>

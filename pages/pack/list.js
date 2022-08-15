@@ -1,9 +1,8 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 
-import { PeopleOutline } from "@mui/icons-material";
-import moment from "moment";
+import { PeopleOutline, Add } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 import {
   Grid,
@@ -12,25 +11,19 @@ import {
   Typography,
   Box,
   Button,
-  FormLabel,
-  MenuItem,
-  Select,
+  Tooltip,
 } from "@mui/material";
 
 import { getPacks } from "../../handlers/pack";
 
 import { AdminLayout } from "../../components/layouts/AdminLayout";
 
-import { statusFormat } from "../../utils/formats";
-
-import { AuthContext } from "../../context/auth";
+import { moneyFormat } from "../../utils/formats";
 
 const PackList = () => {
   const [datas, setDatas] = useState([]);
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
-  const [isLoadingSearch, setLoadingSearch] = useState(false);
-  const [isSearch, setSearch] = useState(false);
 
   const initialData = async () => {
     setLoading(true);
@@ -45,6 +38,8 @@ const PackList = () => {
             id: item._id,
             price: item.price,
             kind: item.kind,
+            maxLimit: item.maxLimit,
+            isFree: item.isFree,
           }))
         );
         return packs;
@@ -59,14 +54,38 @@ const PackList = () => {
     {
       field: "id",
       headerName: "",
-      width: 120,
+      width: 220,
       renderCell: ({ row }) => {
         return (
-          <NextLink href={`/planPack/${row.id}`} passHref>
-            <Link underline="always">
-              <Typography> Crear plan </Typography>
-            </Link>
-          </NextLink>
+          <>
+            <NextLink href={`/planPack/${row.id}`} passHref>
+              <Link underline="always">
+                <Tooltip title="Abrir un nuevo Tour">
+                  <Button
+                    color="success"
+                    className="circular-btn"
+                    type="button"
+                  >
+                    <Add /> Plan
+                  </Button>
+                </Tooltip>
+              </Link>
+            </NextLink>
+            &nbsp;&nbsp;
+            <NextLink href={`/appWeb/${row.id}`} passHref>
+              <Link underline="always">
+                <Tooltip title="Registrar un usuario a un Tour ya existente">
+                  <Button
+                    color="success"
+                    className="circular-btn"
+                    type="button"
+                  >
+                    <Add /> App
+                  </Button>
+                </Tooltip>
+              </Link>
+            </NextLink>
+          </>
         );
       },
     },
@@ -76,20 +95,18 @@ const PackList = () => {
       width: 220,
       renderCell: ({ row }) => {
         return (
-          <NextLink href={`/pack/${row.id}`} passHref>
-            <Link underline="always">
-              <Typography>{row.name} </Typography>
-            </Link>
-          </NextLink>
+          <Typography>
+            <b>{row.name}</b>
+          </Typography>
         );
       },
     },
     {
-      field: "kind",
-      headerName: "Tipo",
-      width: 120,
+      field: "maxLimit",
+      headerName: "Limite",
+      width: 100,
       renderCell: ({ row }) => {
-        return <Typography>{row.kind} </Typography>;
+        return <Typography>{row.maxLimit} </Typography>;
       },
     },
     {
@@ -98,11 +115,9 @@ const PackList = () => {
       width: 120,
       renderCell: ({ row }) => {
         return (
-          <NextLink href={`/pack/${row.id}`} passHref>
-            <Link underline="always">
-              <Typography>{row.price} </Typography>
-            </Link>
-          </NextLink>
+          <Typography>
+            {!row.isFree ? moneyFormat(row.price) : "Propinas"}
+          </Typography>
         );
       },
     },

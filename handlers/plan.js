@@ -40,9 +40,33 @@ export const planSearchAll = async () => {
   };
 };
 
+export const planUpdates = async () => {
+  const response = await axiosApi.get(API_ROUTER.PLAN.planUpdates);
+  const { data, status } = response;
+
+  return {
+    ok1: data?.count > 0 ? true : false,
+    data: data || [],
+    status,
+  };
+};
+
 export const plansById = async (planId) => {
   const response = await axiosApi.get(
     `${API_ROUTER.PLAN.getPlanInstance}/${planId}`
+  );
+  const { data, status } = response;
+
+  return {
+    ok: status === 200 ? true : false,
+    data: data || [],
+    status,
+  };
+};
+
+export const getPlansByPack = async (packId) => {
+  const response = await axiosApi.get(
+    `${API_ROUTER.PLAN.getPlanPack}/${packId}`
   );
   const { data, status } = response;
 

@@ -47,3 +47,6 @@ export const insituFormatOnlyText = (value) => {
   if (value === true) return "SI";
   if (value === false) return "NO";
 };
+
+export const moneyFormat = (text) =>
+  `$ ${text}`.replace(/\B(?=(\d{3})+(?!\d))/g, ".");

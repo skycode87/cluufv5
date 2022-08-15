@@ -43,7 +43,7 @@ const LoginPage = () => {
     setLoading(true);
     const { email, password } = data;
     const isValidLogin = await loginUser(email, password, company);
-    Cookies.set("instance",company);
+    Cookies.set("instance", company);
 
     if (!isValidLogin) {
       setShowError(true);
@@ -52,8 +52,8 @@ const LoginPage = () => {
       return;
     }
     setLoading(false);
-    const destination = router.query.p?.toString() || "/plan/list";
-    router.replace(destination);
+    // const destination = router.query.p?.toString() || "/plan/list";
+    router.replace("/inicio/");
   };
 
   useEffect(() => {

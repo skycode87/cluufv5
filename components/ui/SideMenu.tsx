@@ -53,6 +53,13 @@ export const SideMenu = () => {
                                     </ListItemIcon>
                                     <ListItemText primary={'Cerrar sesión'} />
                             </ListItem>
+
+                            <ListItem button  onClick={() => navigateTo('/inicio/') }>
+                                    <ListItemIcon>
+                                        <LoginOutlined/>
+                                    </ListItemIcon>
+                                    <ListItemText primary={'Inicio'} />
+                            </ListItem>
                     
                          
                             <ListItem 
