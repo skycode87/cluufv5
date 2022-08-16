@@ -1,7 +1,8 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import NextLink from "next/link";
 
-import { PeopleOutline } from "@mui/icons-material";
+import { PeopleOutline, CalendarMonth } from "@mui/icons-material";
+
 import moment from "moment";
 import { DataGrid } from "@mui/x-data-grid";
 import { Grid, Link, CircularProgress, Typography, Box } from "@mui/material";
@@ -121,30 +122,18 @@ const PlanList = () => {
             <Link underline="always">
               <Typography>
                 <b>{row.packName}</b>
+                <br />
+                <small>
+                  <CalendarMonth sx={{ fontSize: 12 }} />{" "}
+                  {moment(row.departureDate, "YYYY-MM-DD").format(
+                    "dddd DD/MM/YYYY"
+                  )}{" "}
+                  {row.departureTime}
+                </small>
               </Typography>
             </Link>
           </NextLink>
         );
-      },
-    },
-    {
-      field: "departureDate",
-      headerName: "Fecha",
-      width: 220,
-      renderCell: ({ row }) => {
-        return (
-          <Typography>
-            {moment(row.departureDate, "YYYY-MM-DD").format("LL")}
-          </Typography>
-        );
-      },
-    },
-    {
-      field: "departureTime",
-      headerName: "Hora",
-      width: 80,
-      renderCell: ({ row }) => {
-        return <Typography>{row.departureTime} </Typography>;
       },
     },
     {
