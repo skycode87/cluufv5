@@ -320,7 +320,8 @@ const PlanList = () => {
           <NextLink href={`/app/${row.id}`} passHref>
             <Link underline="always">
               <Typography>
-                <b>{row.quantity} x</b> {row.firstname} {row.lastname}{" "}
+                <b>{row.quantity} x</b> {row.firstname} {row.lastname} <br />
+                {row.phone}
               </Typography>
             </Link>
           </NextLink>
