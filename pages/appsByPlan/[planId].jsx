@@ -280,7 +280,7 @@ const PlanList = () => {
 
   const whatsapp = (value) => {
     // let phone = value.replace("+", "").replace(" ", "").trim();
-    return `https://wa.me/${phone}`;
+    return `https://wa.me/${value}`;
   };
 
   const columns = [
