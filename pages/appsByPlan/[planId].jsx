@@ -321,7 +321,7 @@ const PlanList = () => {
             <Link underline="always">
               <Typography>
                 <b>{row.quantity} x</b> {row.firstname} {row.lastname} <br />
-                {row.phone}
+                <small>{row.phone}</small>
               </Typography>
             </Link>
           </NextLink>
