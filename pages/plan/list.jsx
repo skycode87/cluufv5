@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import NextLink from "next/link";
 
 import { PeopleOutline, CalendarMonth } from "@mui/icons-material";
-
 import moment from "moment";
 import { DataGrid } from "@mui/x-data-grid";
 import { Grid, Link, CircularProgress, Typography, Box } from "@mui/material";
@@ -17,7 +16,7 @@ import {
 import { AdminLayout } from "../../components/layouts/AdminLayout";
 import TaskSearchByDate from "../../components/forms/taskSearchByDate";
 
-import { statusFormat } from "../../utils/formats";
+import { statusIconFormat } from "../../utils/formats";
 
 const PlanList = () => {
   const [datas, setDatas] = useState([]);
@@ -93,10 +92,10 @@ const PlanList = () => {
   const columns = [
     {
       field: "estatus",
-      headerName: "Estado",
-      width: 80,
+      headerName: "",
+      width: 50,
       renderCell: ({ row }) => {
-        return <Typography>{statusFormat(row.status)} </Typography>;
+        return <Typography>{statusIconFormat(row.status)}</Typography>;
       },
     },
     {
@@ -237,7 +236,7 @@ const PlanList = () => {
               </Grid>
             ) : (
               <Grid item xs={12} sx={{ height: 50, width: "100%" }}>
-                No hay registros
+                Recargue de nuevo la pagina, para visualizar registros.
               </Grid>
             )}
           </Grid>

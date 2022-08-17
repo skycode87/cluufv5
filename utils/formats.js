@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-
+import { ToggleOn, ToggleOff } from "@mui/icons-material";
 export const statusFormat = (value) => {
   if (value === "open")
     return (
@@ -24,6 +24,19 @@ export const statusFormat = (value) => {
       </Typography>
     );
 };
+
+export const statusIconFormat = (value) => {
+  if (value === "open")
+    return <ToggleOn sx={{ color: "green", fontWeight: "bold" }} />;
+  if (value === "close")
+    return <ToggleOff sx={{ color: "red", fontWeight: "bold" }} />;
+  if (value === "inwait")
+    return <ToggleOff sx={{ color: "orange", fontWeight: "bold" }} />;
+  if (value === "cancel")
+    return <ToggleOff sx={{ color: "gray", fontWeight: "bold" }} />;
+};
+
+<ToggleOn />;
 
 export const insituFormat = (value) => {
   if (value === true)
