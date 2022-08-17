@@ -29,7 +29,7 @@ const AppList = () => {
   const initialData = async () => {
     const { data, ok } = await getPlansByPack(packId);
     if (ok) {
-      setPlans(data);
+      setPlans({ ...plans, data });
       if (data.length > 0) {
         setPack(data[0]?.packId);
       }

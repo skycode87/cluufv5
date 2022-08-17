@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import NextLink from "next/link";
 
@@ -50,6 +51,21 @@ const WebForm = ({ onSubmit, isSaving = false, plans, packId, pack }) => {
     },
   });
 
+  function getParameter(paramName) {
+    var searchString = window.location.search.substring(1),
+      i,
+      val,
+      params = searchString.split("&");
+
+    for (i = 0; i < params.length; i++) {
+      val = params[i].split("=");
+      if (val[0] == paramName) {
+        return val[1];
+      }
+    }
+    return null;
+  }
+
   const handleChange = ({ target }) => {
     const { value, name } = target;
     if (name === "insitu") setValue("insitu", value);
@@ -58,6 +74,10 @@ const WebForm = ({ onSubmit, isSaving = false, plans, packId, pack }) => {
     if (name === "paymentMode") setValue("paymentMode", value);
     if (name === "amount") setValue("amount", value);
   };
+
+  useEffect(() => {
+    console.log("aqui", getParameter("x"));
+  }, []);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

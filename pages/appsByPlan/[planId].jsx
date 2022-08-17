@@ -281,28 +281,12 @@ const PlanList = () => {
     {
       field: "archived",
       headerName: "",
-      width: 70,
+      width: 30,
       renderCell: ({ row }) => {
         return (
           <Button onClick={(e) => onDelete(e, { ...row, isDelete: true })}>
             <Delete />
           </Button>
-        );
-      },
-    },
-    {
-      field: "user",
-      headerName: "Usuario",
-      width: 200,
-      renderCell: ({ row }) => {
-        return (
-          <NextLink href={`/app/${row.id}`} passHref>
-            <Link underline="always">
-              <Typography>
-                {row.firstname} {row.lastname}{" "}
-              </Typography>
-            </Link>
-          </NextLink>
         );
       },
     },
@@ -326,6 +310,23 @@ const PlanList = () => {
         );
       },
     },
+    {
+      field: "user",
+      headerName: "Usuario",
+      width: 200,
+      renderCell: ({ row }) => {
+        return (
+          <NextLink href={`/app/${row.id}`} passHref>
+            <Link underline="always">
+              <Typography>
+                {row.firstname} {row.lastname}{" "}
+              </Typography>
+            </Link>
+          </NextLink>
+        );
+      },
+    },
+
     {
       field: "email",
       headerName: "Email",
@@ -464,7 +465,7 @@ const PlanList = () => {
             <Grid item xs={12} md={2}>
               <b>Nombre</b>
               <Typography variant="overline" display="block" gutterBottom>
-                {plan?.packId.name}
+                {plan?.planName}
               </Typography>
             </Grid>
 
