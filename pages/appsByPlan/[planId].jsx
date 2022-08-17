@@ -126,6 +126,7 @@ const PlanList = () => {
             amount: item.amount,
             observation: item.observation,
             userId: item.userId._id,
+            quantity: item.quantity || 1,
             planName: `${item.packId.name}  ${item.planId.departureDate}  ${item.planId.departureTime}`,
           }))
         );
@@ -319,7 +320,7 @@ const PlanList = () => {
           <NextLink href={`/app/${row.id}`} passHref>
             <Link underline="always">
               <Typography>
-                {row.firstname} {row.lastname}{" "}
+                <b>{row.quantity} x</b> {row.firstname} {row.lastname}{" "}
               </Typography>
             </Link>
           </NextLink>
