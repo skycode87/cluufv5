@@ -278,6 +278,11 @@ const PlanList = () => {
     download(txt, "data.csv", "text/plain");
   };
 
+  const whatsapp = (value) => {
+    let phone = value.replace("+", "").replace(" ", "").trim();
+    return `https://wa.me/${phone}`;
+  };
+
   const columns = [
     {
       field: "archived",
@@ -317,18 +322,34 @@ const PlanList = () => {
       width: 200,
       renderCell: ({ row }) => {
         return (
-          <NextLink href={`/app/${row.id}`} passHref>
-            <Link underline="always">
-              <Typography>
-                <b>{row.quantity} x</b> {row.firstname} {row.lastname} <br />
-                <small>{row.phone}</small>
-              </Typography>
-            </Link>
-          </NextLink>
+          <>
+            <NextLink href={`/app/${row.id}`} passHref>
+              <Link underline="always">
+                <Typography>
+                  <b>{row.quantity} x</b> {row.firstname} {row.lastname}
+                </Typography>
+              </Link>
+            </NextLink>
+          </>
         );
       },
     },
-
+    {
+      field: "phone",
+      headerName: "Whatsapp",
+      width: 200,
+      renderCell: ({ row }) => {
+        return (
+          <>
+            <a href={whatsapp(row.phone)} target="blank">
+              <Link underline="always">
+                <small> {row.phone}</small>
+              </Link>
+            </a>
+          </>
+        );
+      },
+    },
     {
       field: "email",
       headerName: "Email",
