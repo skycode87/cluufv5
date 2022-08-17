@@ -1,10 +1,11 @@
 export const GLOBALS = {
-  backend_url: "http://localhost:2002",
-  //backend_url: "https://walrus-app-8bv3s.ondigitalocean.app",
+  //backend_url: "http://localhost:2002",
+  backend_url: "https://walrus-app-8bv3s.ondigitalocean.app",
   admin: "dm",
   guide: "gd",
   superadmin: "sdm",
 };
+//
 
 export const API_ROUTER = {
   signin: `${GLOBALS.backend_url}/signin`,
