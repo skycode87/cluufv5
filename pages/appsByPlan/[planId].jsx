@@ -465,7 +465,7 @@ const PlanList = () => {
             <Grid item xs={12} md={2}>
               <b>Nombre</b>
               <Typography variant="overline" display="block" gutterBottom>
-                {plan?.planName}
+                {plan?.packId?.name}
               </Typography>
             </Grid>
 
