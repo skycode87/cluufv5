@@ -529,6 +529,9 @@ const PlanList = () => {
               &nbsp;
             </Grid>
 
+            {/*
+           
+                  */}
             {isAdmin && (
               <Grid item xs={6} md={2}>
                 <Button
@@ -569,7 +572,22 @@ const PlanList = () => {
 
       <Box className="card">
         <Typography variant="overline" display="block">
-          Aplicaciones
+          <b>Aplicaciones</b> &nbsp;&nbsp;
+          {datas && imagex?.length > 0 && (
+            <a
+              target="blank"
+              href={`https://d28850bg6enx1h.cloudfront.net/app_s4.html?q=${plan?.packId?._id}&agency=capture&type=suscriber&p=${plan?._id}`}
+              style={{
+                border: "1px solid rgba(121, 159, 12, 0.5)",
+                padding: "5px 20px",
+                borderRadius: "5px",
+                width: "100%",
+                color: "#799F0C",
+              }}
+            >
+              <b> Ver {imagex?.length} Imagenes</b>
+            </a>
+          )}
         </Typography>
         {!isLoading ? (
           <Grid container className="fadeIn">
