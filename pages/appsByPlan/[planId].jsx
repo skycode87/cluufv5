@@ -340,6 +340,15 @@ const PlanList = () => {
                   >
                     {row.referer}
                   </span>
+                  <br />
+                  <span
+                    style={{
+                    
+                      fontSize: 10,
+                    }}
+                  >
+                    {row.observation || ""}
+                  </span>
                 </Typography>
               </Link>
             </NextLink>
