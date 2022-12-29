@@ -343,7 +343,6 @@ const PlanList = () => {
                   <br />
                   <span
                     style={{
-                    
                       fontSize: 10,
                     }}
                   >
