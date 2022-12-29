@@ -112,6 +112,7 @@ const PlanList = () => {
             status: item.status,
             code: item.code,
             referer: item.refererRootId?.firstname,
+            refererColor: item.refererRootId?.document || "#ff000000",
             serial: item.serial,
             status: item.status,
             firstname: item.userId?.firstname,
@@ -327,6 +328,18 @@ const PlanList = () => {
               <Link underline="always">
                 <Typography>
                   <b>{row.quantity} x</b> {row.firstname} {row.lastname}
+                  <br />
+                  <span
+                    style={{
+                      backgroundColor: row.refererColor,
+                      padding: "1px 5px",
+                      color: "#fff",
+                      borderRadius: 3,
+                      fontSize: 10,
+                    }}
+                  >
+                    {row.referer}
+                  </span>
                 </Typography>
               </Link>
             </NextLink>
