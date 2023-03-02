@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import NextLink from "next/link";
 
-import { PeopleOutline, CalendarMonth } from "@mui/icons-material";
+import {
+  PeopleOutline,
+  CalendarMonth,
+  TimeToLeaveOutlined,
+} from "@mui/icons-material";
 import moment from "moment";
 import { DataGrid } from "@mui/x-data-grid";
 import { Grid, Link, CircularProgress, Typography, Box } from "@mui/material";
@@ -78,6 +82,8 @@ const PlanList = () => {
               guideName: plan?.guideId?.firstname,
               availability: plan?.availability,
               openApps: plan?.openApps,
+              fecha: plan?.fecha,
+              hora: plan?.hora,
               id: plan?._id,
             }))
           );
@@ -116,7 +122,7 @@ const PlanList = () => {
     {
       field: "packName",
       headerName: "Paquete",
-      width: 200,
+      width: 300,
       renderCell: ({ row }) => {
         return (
           <NextLink href={`/appsByPlan/${row.id}`} passHref>
@@ -125,7 +131,12 @@ const PlanList = () => {
                 <b>{row.packName}</b>
                 <br />
                 <small>
-                  <CalendarMonth sx={{ fontSize: 12 }} /> {row.hora} {row.fecha}
+                  <CalendarMonth sx={{ fontSize: 12 }} /> {row.fecha} {"   "}{" "}
+                  &nbsp; &nbsp;
+                  <b>
+                    {" "}
+                    <TimeToLeaveOutlined sx={{ fontSize: 12 }} /> {row.hora}{" "}
+                  </b>
                 </small>
               </Typography>
             </Link>
