@@ -123,11 +123,7 @@ const PlanList = () => {
                 <b>{row.packName}</b>
                 <br />
                 <small>
-                  <CalendarMonth sx={{ fontSize: 12 }} />{" "}
-                  {moment(row.departureDate, "YYYY-MM-DD").format(
-                    "dddd DD/MM/YYYY"
-                  )}{" "}
-                  {row.departureTime}
+                  <CalendarMonth sx={{ fontSize: 12 }} /> {row.hora} {row.fecha}
                 </small>
               </Typography>
             </Link>
