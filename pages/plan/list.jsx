@@ -42,6 +42,8 @@ const PlanList = () => {
             guideName: plan?.guideId?.firstname,
             availability: plan?.availability,
             openApps: plan?.openApps,
+            fecha: plan?.fecha,
+            hora: plan?.hora,
             id: plan?._id,
           }))
         );
