@@ -25,6 +25,7 @@ import { statusIconFormat } from "../../utils/formats";
 const PlanList = () => {
   const [datas, setDatas] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [arrys, setArrys] = useState([]);
 
   const handlePlansByGuia = async () => {
     try {
@@ -65,28 +66,34 @@ const PlanList = () => {
     try {
       const { ok1 } = await planUpdates();
       if (ok1) {
+        console.log("ok1");
         const { plans, ok } = await planSearchAll();
         if (ok) {
-          setDatas(
-            plans.map((plan) => ({
-              departureDate: plan.departureDate,
-              departureTime: plan.departureTime,
-              maxLimit: plan.maxLimit,
-              name: plan.name,
-              packId: plan.packId,
-              price: plan.price,
-              serial: plan.serial,
-              status: plan.status,
-              totalApps: plan.totalApps,
-              packName: plan.packId.name,
-              guideName: plan?.guideId?.firstname,
-              availability: plan?.availability,
-              openApps: plan?.openApps,
-              fecha: plan?.fecha,
-              hora: plan?.hora,
-              id: plan?._id,
-            }))
-          );
+          console.log("ok2", plans);
+
+          let itemsArray = [];
+          plans.forEach((item) => {
+            itemsArray.push({
+              departureDate: item.departureDate,
+              departureTime: item.departureTime,
+              maxLimit: item.maxLimit,
+              name: item.name,
+              packId: item.packId,
+              price: item.price,
+              serial: item.serial,
+              status: item.status,
+              totalApps: item?.totalApps,
+              packName: item.packId?.name,
+              guideName: item?.guideId?.firstname,
+              availability: item?.availability,
+              openApps: item?.openApps,
+              fecha: item?.fecha,
+              hora: item?.hora,
+              id: item?._id,
+            });
+          });
+
+          setDatas(itemsArray);
 
           return plans;
         }
@@ -214,6 +221,10 @@ const PlanList = () => {
 
   const handleChange = (e) => {};
 
+  useEffect(() => {
+    console.log("datas", datas);
+  }, [datas]);
+
   return (
     <AdminLayout
       title={"Usuarios"}
@@ -230,7 +241,7 @@ const PlanList = () => {
               />
             </Grid>
 
-            {datas.length > 0 ? (
+            {datas && datas.length > 0 ? (
               <Grid item xs={12} sx={{ height: 1000, width: "100%" }}>
                 {!isLoading ? (
                   <DataGrid
